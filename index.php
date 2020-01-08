@@ -49,12 +49,12 @@
     <div class="modal-content1">
         <div id="th">
         <span class="closee">&times;</span>
-        <h2 id="h2">Select theme</h2>
-            <input type="radio" id="img1" name="th" value="bac.jpg" onclick="changeImg1()">Theme_1<br>
-        <input type="radio" id="img2" name="th" value="bac2.jpg" onclick="changeImg2()">Theme_2<br>
-        <input type="radio" id="img3" name="th" value="bac3.jpeg" onclick="changeImg3()">Theme_3
+        <h2 id="h2">Select theme</h2><br><br><br>
+            <input type="radio" id="img1" name="th" value="bac.jpg" onclick="changeImg1()">Theme_1<br><br><br>
+            <input type="radio" id="img2" name="th" value="bac2.jpg" onclick="changeImg2()"checked>Theme_2<br><br><br>
+            <input type="radio" id="img3" name="th" value="bac3.jpeg" onclick="changeImg3()">Theme_3
         </div>
-
+    </div>
         <script>
             function changeImg1(){
                 document.getElementById('game-field').style.backgroundImage="url(bac.jpg)";
@@ -67,7 +67,7 @@
             }
 
         </script>
-    </div>
+
     <script>
     var modall = document.getElementById("option");
     var btnn = document.getElementById("optionbtn");
