@@ -1,17 +1,19 @@
 var mycanvas = document.getElementById('mycanvas');
-var ctx = mycanvas.getContext('2d');
+var ctx = mycanvas.getContext('2d', WebGLTexture);
 var snakeSizeH = 5;
 var snakeSizeW = 5;
 var cvsH = mycanvas.height;
 var cvsW = mycanvas.width;
 var score = 0;
 var snake;
-
 var food;
-
+var eat;
+var die;
+var sWel;
 // Module pattern
 var drawModule = (function () {
     var bodySnake = function (x, y) {
+
         // This is the single square
         ctx.fillStyle = 'green';
         ctx.fillRect(x * snakeSizeW, y * snakeSizeH, snakeSizeW, snakeSizeH);
@@ -19,20 +21,17 @@ var drawModule = (function () {
         ctx.strokeStyle = 'darkgreen';
         ctx.strokeRect(x * snakeSizeW, y * snakeSizeH, snakeSizeW, snakeSizeH);
     }
-
     var pizza = function (x, y) {
         // This is the border of the pizza
         ctx.fillStyle = 'red';
         ctx.fillRect(x * snakeSizeW , y * snakeSizeH , snakeSizeW , snakeSizeH );
     }
-
     var scoreText = function () {
         // How many pizzas did the snake eat
         var score_text = "Score: " + score;
         ctx.fillStyle = 'blue';
         ctx.fillText(score_text, 5, cvsH - 5);
     }
-
     var drawSnake = function () {
         // Initially the body of the snake
         var length = 2;
@@ -43,14 +42,12 @@ var drawModule = (function () {
             snake.push({x: i, y: 0});
         }
     }
-
     var createFood = function() {
         food = {
             //Generate random numbers.
             x: Math.floor((Math.random()  /*(cvsW/snakeSizeW)-5)*/ *20) + 1),
             y: Math.floor((Math.random()  /*(cvsH/snakeSizeH)-5)*/ *20)+ 1)
         }
-
         //Look at the position of the snake's body.
         for (var i=0; i>snake.length; i++) {
             var snakeX = snake[0].x;
@@ -62,7 +59,6 @@ var drawModule = (function () {
             }
         }
     }
-
     var checkCollision = function(x, y, array) {
         for(var i = 0; i < array.length; i++) {
             if(array[i].x === x && array[i].y === y)
@@ -70,7 +66,6 @@ var drawModule = (function () {
         }
         return false;
     }
-
     var paint = function () {
         //Let's draw the space in which the snake will move.
         ctx.fillStyle = 'lightgrey';
@@ -100,11 +95,11 @@ var drawModule = (function () {
             snakeY++;
         }
 
-
         //If the snake touches the canvas path or itself, it will die!
-
-
         if (snakeX < 0 || snakeY < 0 || snakeX >= cvsW / snakeSizeW || snakeY >= cvsH / snakeSizeH || checkCollision(snakeX, snakeY, snake)) {
+            die = new Audio();
+            die.src = "sounds/die.mp3";
+            die.play();
             //Stop the game.
 
             //Make the start button enabled again.
@@ -116,23 +111,11 @@ var drawModule = (function () {
 
             document.getElementById('score2').value = score;
 
-
-
-
-
-
-
-
-
-
             //Clean up the canvas.
             ctx.clearRect(0, 0, cvsW, cvsH);
             gameloop = clearInterval(gameloop);
             return;
         }
-
-
-
 
         document.addEventListener('onload', popup);
         function popup() {
@@ -142,9 +125,6 @@ var drawModule = (function () {
             //span.onclick().style.display='none';
 
         }
-
-
-
 
         //If the snake eats food it becomes longer and this means that, in this case, you shouldn't pop out the last element of the array.
         if (snakeX == food.x && snakeY == food.y) {
@@ -157,6 +137,9 @@ var drawModule = (function () {
 
             //Create new food.
             createFood();
+            eat = new Audio();
+            eat.src = "sounds/eat.mp3";
+            eat.play();
         } else {
 
             //Pop out the last cell.
@@ -204,9 +187,6 @@ var drawModule = (function () {
     var btn = document.getElementById('btn');
     btn.addEventListener("click", function () {
         drawModule.init();
-
-
-
     });
 
     document.onkeydown = function (event) {
@@ -245,7 +225,5 @@ var drawModule = (function () {
                 break;
         }
     }
-
-
 
 })(window, document, drawModule);

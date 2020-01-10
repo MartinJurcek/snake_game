@@ -15,12 +15,18 @@
             Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
         </div>
     </canvas>
+    <script>
+        sWel = new Audio();
+        sWel.src = "sounds/welcome.mp3";
+    </script>
+
+
 
     <div><input type="image" id="optionbtn" alt="settings" src="picture.png"></div>
-    <div><button id="btn" onclick="this.style.display='none'; hideSleepIn()">Start Game</button></div>
+    <div><button id="btn" onclick="this.style.display='none'; hideSleepIn()" onmousedown = "sWel.play()" >Start Game</button></div>
     <div><input type="button" id="high" name="answer" value="Highscore"/></div>
     <a href="https://www.google.rs/?gws_rd=cr&ei=-rpRUr62KeqH4ASv2IDwBg">
-    <div><input type="button" id="exit" name="answer"  value="Exit"/></div>
+    <div><input type="button" id="exit" name="answer"  value="Exit" /></div>
     </a>
     <script src="btnnone.js"></script>
 
